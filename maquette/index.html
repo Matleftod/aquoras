@@ -110,28 +110,57 @@
     </section>
 
     <section id="produits" class="section products" aria-label="Nos produits">
-      <div class="container">
-        <h2 class="section-title" data-reveal>Nos produits</h2>
+        <div class="container">
+            <h2 class="section-title" data-reveal>Nos produits</h2>
 
-        <div class="product-grid" data-reveal aria-label="Produits">
-          <div class="product-tile" aria-hidden="true">
-            <svg viewBox="0 0 120 120" class="product-icon">
-              <path d="M58 10c0 8-4 10-4 16v7c0 6 12 6 12 0v-7c0-6-4-8-4-16" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-              <path d="M52 40c-10 10-12 20-12 34v20c0 10 8 18 20 18s20-8 20-18V74c0-14-2-24-12-34" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-              <path d="M46 78h28" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-            </svg>
-          </div>
+            <div class="product-tabs" data-reveal role="tablist" aria-label="Catégories produits">
+            <button class="product-tab is-active" type="button" role="tab" aria-selected="true" data-focus="bouteille">
+                Bouteille
+            </button>
+            <button class="product-tab" type="button" role="tab" aria-selected="false" data-focus="bouchon">
+                Bouchon
+            </button>
+            <button class="product-tab" type="button" role="tab" aria-selected="false" data-focus="etiquette">
+                Étiquette
+            </button>
+            <button class="product-tab" type="button" role="tab" aria-selected="false" data-focus="carton">
+                Carton
+            </button>
+            </div>
 
-          <div class="product-tile" aria-hidden="true">
-            <svg viewBox="0 0 120 120" class="product-icon">
-              <path d="M20 44l40-18 40 18-40 18-40-18Z" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
-              <path d="M20 44v32l40 18 40-18V44" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
-              <path d="M60 62v32" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-            </svg>
-          </div>
+            <div class="product-strip" data-reveal aria-label="Présentation des produits">
+            <div class="product-item is-active" data-item="bouteille" aria-label="Bouteille">
+                <svg viewBox="0 0 120 120" class="product-icon" aria-hidden="true">
+                <path d="M58 10c0 8-4 10-4 16v7c0 6 12 6 12 0v-7c0-6-4-8-4-16" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                <path d="M52 40c-10 10-12 20-12 34v20c0 10 8 18 20 18s20-8 20-18V74c0-14-2-24-12-34" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                <path d="M46 78h28" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <div class="product-item" data-item="bouchon" aria-label="Bouchon">
+                <svg viewBox="0 0 120 120" class="product-icon" aria-hidden="true">
+                <path d="M40 40c0-10 10-18 20-18s20 8 20 18v40c0 10-10 18-20 18s-20-8-20-18V40Z" fill="none" stroke="currentColor" stroke-width="6"/>
+                <path d="M40 54h40M40 66h40" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <div class="product-item" data-item="etiquette" aria-label="Étiquette">
+                <svg viewBox="0 0 120 120" class="product-icon" aria-hidden="true">
+                <path d="M34 28h52v64H34z" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
+                <path d="M42 44h36M42 58h28M42 72h32" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <div class="product-item" data-item="carton" aria-label="Carton">
+                <svg viewBox="0 0 120 120" class="product-icon" aria-hidden="true">
+                <path d="M20 44l40-18 40 18-40 18-40-18Z" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
+                <path d="M20 44v32l40 18 40-18V44" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
+                <path d="M60 62v32" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                </svg>
+            </div>
+            </div>
         </div>
-      </div>
-    </section>
+        </section>
 
     <section id="pourqui" class="section audience" aria-label="Pour qui est ce projet">
       <div class="container">

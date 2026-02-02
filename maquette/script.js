@@ -28,6 +28,32 @@ function setupReveal(){
   els.forEach(el => io.observe(el));
 }
 
+(() => {
+  const tabs = Array.from(document.querySelectorAll(".product-tab"));
+  const items = Array.from(document.querySelectorAll(".product-item"));
+  if (!tabs.length || !items.length) return;
+
+  const setActive = (key) => {
+    tabs.forEach(t => {
+      const active = t.dataset.focus === key;
+      t.classList.toggle("is-active", active);
+      t.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    items.forEach(i => i.classList.toggle("is-active", i.dataset.item === key));
+  };
+
+  tabs.forEach(t => {
+    t.addEventListener("mouseenter", () => setActive(t.dataset.focus));
+    t.addEventListener("click", () => setActive(t.dataset.focus));
+  });
+
+  items.forEach(i => {
+    i.addEventListener("mouseenter", () => setActive(i.dataset.item));
+  });
+
+  setActive("bouteille");
+})();
+
 window.addEventListener("load", () => {
   document.body.classList.add("is-loaded");
 });

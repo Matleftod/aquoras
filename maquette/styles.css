@@ -270,35 +270,93 @@ body.is-loaded [data-intro]{
   font-weight: 550;
 }
 
-/* Products */
-.product-grid{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  margin-top: 12px;
+/* Products (tabs centrés + pictos alignés sans cadre) */
+.product-tabs{
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  margin-bottom: 22px;
 }
-.product-tile{
-  height: 220px;
-  border-radius: calc(var(--r) + 10px);
+
+.product-tab{
+  appearance: none;
   border: 1px solid rgba(7,18,19,.10);
-  background:
-    radial-gradient(600px 260px at 20% 10%, rgba(20, 84, 90, .12), transparent 62%),
-    radial-gradient(600px 260px at 80% 20%, rgba(20, 84, 90, .09), transparent 62%),
-    linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.58));
-  box-shadow: var(--shadow);
+  background: rgba(255,255,255,.82);
+  border-radius: 999px;
+
+  padding: 14px 18px;
+  min-width: 140px;
+
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: .01em;
+  color: rgba(11,22,23,.86);
+
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+}
+
+.product-tab:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.95);
+  border-color: rgba(20,84,90,.22);
+}
+
+.product-tab.is-active{
+  background: rgba(20,84,90,.10);
+  border-color: rgba(20,84,90,.24);
+}
+
+/* ligne de pictos */
+.product-strip{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: clamp(18px, 5vw, 56px);
+  flex-wrap: wrap;
+  padding-top: 8px;
+}
+
+/* aucun cadre, juste une zone de hover */
+.product-item{
   display: grid;
   place-items: center;
-  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  padding: 10px;
+  cursor: default;
+
+  opacity: .78;
+  filter: grayscale(1) brightness(.28) contrast(1.05);
+
+  transform: scale(1);
+  transition: transform .22s ease, filter .22s ease, opacity .22s ease;
+  transform-origin: center bottom;
+}
+
+.product-item:hover,
+.product-item.is-active{
+  opacity: 1;
+  filter: none;
+  transform: scale(1.16);
+  z-index: 2;
+}
+
+/* taille des pictos */
+.product-icon{
+  width: clamp(86px, 10vw, 140px);
+  height: auto;
   color: rgba(20,84,90,.92);
 }
-.product-tile:hover{
-  transform: translateY(-2px);
-  border-color: rgba(20,84,90,.20);
-  box-shadow: 0 22px 60px rgba(7,18,19,.12);
+
+/* optionnel : hiérarchie visuelle (bouteille un peu plus grande) */
+.product-item[data-item="bouteille"] .product-icon{
+  width: clamp(100px, 12vw, 170px);
 }
-.product-icon{
-  width: 94px;
-  height: 94px;
+
+/* responsive */
+@media (max-width: 940px){
+  .product-tab{ min-width: 120px; }
 }
 
 /* Audience */
