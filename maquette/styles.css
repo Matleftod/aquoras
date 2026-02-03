@@ -175,7 +175,7 @@ img{ max-width: 100%; display: block; }
 [data-intro]{
   opacity: 0;
   transform: translateY(22px);
-  transition: opacity .7s ease, transform .7s ease;
+  transition: opacity 1.7s ease, transform 1.7s ease;
   will-change: opacity, transform;
 }
 body.is-loaded [data-intro]{
