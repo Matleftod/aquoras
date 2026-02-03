@@ -16,7 +16,7 @@ function setupHeader(){
 
 function setupReveal(){
   if (prefersReducedMotion) return;
-  const els = Array.from(document.querySelectorAll("[data-reveal]"));
+    const els = Array.from(document.querySelectorAll("[data-reveal]:not(.step--road)"));
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       if (!e.isIntersecting) return;
@@ -26,6 +26,60 @@ function setupReveal(){
   }, { threshold: 0.14 });
 
   els.forEach(el => io.observe(el));
+}
+
+function setupProcessRoadmap(){
+  const section = document.querySelector("#fonctionnement");
+  const roadmap = section?.querySelector("[data-roadmap]");
+  if (!section || !roadmap) return;
+
+  const track = roadmap.querySelector(".roadmap-track");
+  const rows = Array.from(roadmap.querySelectorAll("[data-row]"));
+  const pins = rows.map(r => r.querySelector(".row-pin"));
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+  const THRESHOLD_FROM_BOTTOM = 100; // px
+  let raf = 0;
+
+  const update = () => {
+    raf = 0;
+
+    const y = window.scrollY;
+    const vh = window.innerHeight || 1;
+    const thresholdDoc = y + (vh - THRESHOLD_FROM_BOTTOM);
+
+    const trackRect = track.getBoundingClientRect();
+    const trackTop = trackRect.top + y;
+    const trackHeight = trackRect.height;
+    const trackBottom = trackTop + trackHeight;
+
+    const dotDoc = clamp(thresholdDoc, trackTop, trackBottom);
+    const dotY = clamp(dotDoc - trackTop, 0, trackHeight);
+
+    roadmap.style.setProperty("--dotY", `${dotY}px`);
+    roadmap.style.setProperty("--progressPx", `${dotY}px`);
+
+    for (let i = 0; i < rows.length; i++){
+      const pin = pins[i];
+      if (!pin) continue;
+
+      const pr = pin.getBoundingClientRect();
+      const pinDoc = pr.top + y + pr.height / 2;
+
+      const visible = dotDoc >= pinDoc;
+      rows[i].classList.toggle("is-visible", visible);
+    }
+  };
+
+  const onScroll = () => {
+    if (raf) return;
+    raf = requestAnimationFrame(update);
+  };
+
+  update();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
 }
 
 (() => {
@@ -60,3 +114,4 @@ window.addEventListener("load", () => {
 
 setupHeader();
 setupReveal();
+setupProcessRoadmap();
