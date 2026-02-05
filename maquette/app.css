@@ -45,8 +45,6 @@
 */
 
 @layer components {
-  /* header density when scrolling (JS toggles .is-solid) */
-  .is-solid { @apply bg-base-100/95 border-base-300; }
 
   /* reveal animation (JS toggles .is-revealed) */
   [data-reveal] { @apply opacity-0 translate-y-3 blur-[2px] transition-all duration-500; }
