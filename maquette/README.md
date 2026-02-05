@@ -1,23 +1,12 @@
-# Maquette Aqoras (Tailwind + DaisyUI)
+# Aqoras – DaisyUI refresh
 
-## Installation
-```bash
-pnpm install
-```
+- `index.html` : refonte classes Tailwind/DaisyUI (layout conservé)
+- `app.css` : Tailwind v4 + DaisyUI + mini CSS (hero vidéos + roadmap + animations)
 
-## Développement (watch)
+## Run
 ```bash
 pnpm dev
-```
-
-## Build CSS (minifié)
-```bash
-pnpm build
-```
-
-## Serveur statique
-```bash
 pnpm serve
 ```
 
-> `tailwind.css` est généré à partir de `app.css`.
+Assure-toi d'avoir `tailwind.css` généré et que `index.html` ne charge plus `styles.css`.
