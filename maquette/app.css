@@ -1,2 +1,10 @@
 @import "tailwindcss";
-@plugin "daisyui";
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply min-h-screen bg-base-200 text-base-content font-sans; }
+}
+
+@layer components {
+  /* Place tes composants custom ici au fur et à mesure de la migration vers DaisyUI */
+}
