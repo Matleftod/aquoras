@@ -566,24 +566,14 @@ body.is-loaded [data-intro]{
 .product-item.is-active{ z-index: 4; }
 .product-item:hover{ z-index: 5; }
 
-/* Carton toujours derrière, même si actif/hover */
-.product-item[data-item="carton"]{
-  z-index: 0 !important;
-}
+.product-item[data-item="bouchon"]   .product-icon{ width: 155px; }
+.product-item[data-item="bouteille"] .product-icon{ width: 110px; }
+.product-item[data-item="etiquette"] .product-icon{ width: 109px; }
+.product-item[data-item="carton"]    .product-icon{ width: 300px; }
 
-.product-item[data-item="carton"].is-active,
-.product-item[data-item="carton"]:hover{
-  z-index: 0 !important;
-}
-
-.product-item[data-item="bouteille"] .product-icon{ width: clamp(150px, 21vw, 270px); }
-.product-item[data-item="bouchon"]   .product-icon{ width: clamp(110px, 20vw, 300px); }
-.product-item[data-item="etiquette"] .product-icon{ width: clamp(100px, 9vw, 210px); }
-.product-item[data-item="carton"]    .product-icon{ width: clamp(130px, 40vw, 630px); }
-
-.product-shift--bouchon{ transform: translate(-80px, 160px); }
-.product-shift--etiquette{ transform: translate(1px, 31px); }
-.product-shift--carton{ transform: translate(145px, 70px); }
+.product-shift--bouchon{ transform: translate(-85px, 165px); }
+.product-shift--etiquette{ transform: translate(0px, 33px); }
+.product-shift--carton{ transform: translate(170px, 65px); }
 
 
 /* Responsive : offsets plus soft sur mobile */
