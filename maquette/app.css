@@ -1,8 +1,8 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 @layer base {
-  html { scroll-behavior: smooth; }
-  body { @apply min-h-screen bg-base-200 text-base-content font-sans; }
+  body { @apply min-h-screen bg-base-200 text-base-content; }
 }
 
 @layer components {

@@ -91,6 +91,7 @@ function setupProcessRoadmap(){
     tabs.forEach(t => {
       const active = t.dataset.focus === key;
       t.classList.toggle("is-active", active);
+      t.classList.toggle("tab-active", active);
       t.setAttribute("aria-selected", active ? "true" : "false");
     });
     items.forEach(i => i.classList.toggle("is-active", i.dataset.item === key));
