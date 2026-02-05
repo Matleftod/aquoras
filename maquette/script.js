@@ -75,29 +75,86 @@ function setupProcessRoadmap(){
 }
 
 (() => {
-  const tabs = Array.from(document.querySelectorAll(".product-tab"));
-  const items = Array.from(document.querySelectorAll(".product-item"));
+  const scope = document.querySelector("#produits");
+  if (!scope) return;
+
+  const tabs = Array.from(scope.querySelectorAll(".product-tab"));
+  const items = Array.from(scope.querySelectorAll(".product-item"));
   if (!tabs.length || !items.length) return;
 
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
   const setActive = (key) => {
-    tabs.forEach(t => {
+    tabs.forEach((t) => {
       const active = t.dataset.focus === key;
       t.classList.toggle("is-active", active);
       t.classList.toggle("tab-active", active);
       t.setAttribute("aria-selected", active ? "true" : "false");
     });
-    items.forEach(i => i.classList.toggle("is-active", i.dataset.item === key));
+    items.forEach((i) => i.classList.toggle("is-active", i.dataset.item === key));
   };
 
-  tabs.forEach(t => {
+  const clearActive = () => {
+    tabs.forEach((t) => {
+      t.classList.remove("is-active", "tab-active");
+      t.setAttribute("aria-selected", "false");
+    });
+    items.forEach((i) => i.classList.remove("is-active"));
+  };
+
+  tabs.forEach((t) => {
     t.addEventListener("mouseenter", () => setActive(t.dataset.focus));
     t.addEventListener("click", () => setActive(t.dataset.focus));
   });
 
-  items.forEach(i => {
+  items.forEach((i) => {
     i.addEventListener("mouseenter", () => setActive(i.dataset.item));
   });
 
+  // Aucun actif par défaut
+  clearActive();
+
+  if (!canHover) return;
+
+  let timer = 0;
+
+  const armClear = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      // si on ne survole plus ni un bouton ni une image -> reset
+      if (!scope.querySelector(".product-tab:hover, .product-item:hover")) {
+        clearActive();
+      }
+    }, 60);
+  };
+
+  const disarmClear = () => {
+    clearTimeout(timer);
+  };
+
+  // Dès qu’on entre sur un élément interactif, on annule le reset
+  scope.addEventListener(
+    "pointerover",
+    (e) => {
+      if (e.target.closest(".product-tab, .product-item")) disarmClear();
+    },
+    true
+  );
+
+  // Dès qu’on sort d’un élément interactif, on arme le reset
+  scope.addEventListener(
+    "pointerout",
+    (e) => {
+      if (e.target.closest(".product-tab, .product-item")) armClear();
+    },
+    true
+  );
+
+  // Si on sort complètement de la section, reset immédiat
+  scope.addEventListener("pointerleave", () => {
+    disarmClear();
+    clearActive();
+  });
 })();
 
 window.addEventListener("load", () => {
