@@ -10,25 +10,29 @@
   name: "aqoras";
   default: true;
 
-  /* Couleurs (lisibles v5) */
   --color-primary: #14545a;
-  --color-secondary: #2b8a92;
-  --color-accent: #f59e0b;
-  --color-neutral: #0f172a;
+  --color-primary-content: #ffffff;
 
-  --color-base-100: #ffffff;
-  --color-base-200: #f4f6f7;
-  --color-base-300: #e6eaec;
+  --color-secondary: #79B7BC;
+  --color-secondary-content: #062527;
 
-  --color-info: #3b82f6;
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
+  --color-accent: #D6A24B;
+  --color-accent-content: #1b1205;
 
-  /* Optionnel : aspect un peu plus “premium” */
-  --radius-box: 1rem;
+  --color-neutral: #0B1617;
+  --color-neutral-content: #EAF1F1;
+
+  --color-base-100: #F7F8F7;
+  --color-base-200: #EEF2F2;
+  --color-base-300: #E2E8E8;
+  --color-base-content: #0B1617;
+
+  --radius-box: 1.6rem;
   --radius-btn: 999px;
   --radius-badge: 999px;
+
+  --btn-text-case: none;
+  --border-btn: 1px;
 }
 
 @layer base {

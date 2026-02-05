@@ -1,7 +1,56 @@
-/* styles.css */
-/* Aqoras – maquette claire, minimal copy
-   Couleur principale : #14545a
-*/
+@layer components {
+  /* Stage: gros bloc arrondi, version claire et sombre */
+  .stage {
+    @apply rounded-[2.5rem] border border-base-200 bg-base-100 shadow-sm;
+  }
+  .stage-dark {
+    @apply bg-neutral text-neutral-content border-white/10;
+    box-shadow: 0 40px 120px rgba(0,0,0,.35);
+  }
+
+  /* Divider avec encoche centrale */
+  .notched-divider {
+    @apply relative my-10 h-px bg-current/15;
+  }
+  .notched-divider::before {
+    content: "";
+    @apply absolute left-1/2 top-1/2 h-3 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full;
+    background: color-mix(in oklab, currentColor 12%, transparent);
+  }
+
+  /* Card avec onglet en haut */
+  .no-tab::before { content: none; }
+  .tab-card {
+    @apply relative rounded-[1.8rem] bg-base-100 border border-base-200 shadow-sm overflow-hidden;
+  }
+  .tab-card::before {
+    content: attr(data-tab);
+    @apply absolute -top-3 left-6 px-4 py-1 text-xs font-semibold tracking-wide rounded-full border border-base-200 bg-base-200 text-base-content;
+  }
+
+  /* “Habillage” de bloc texte (pas une card générique) */
+  .copy-panel {
+    @apply rounded-[1.8rem] border border-base-200 bg-base-100/70 backdrop-blur px-7 py-6;
+  }
+  .copy-panel-accent {
+    @apply border-primary/25;
+    box-shadow: 0 18px 60px rgba(20,84,90,.12);
+  }
+
+  .aq-corner-oval{
+    border-top-left-radius: 80% 40%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 20% 50%;
+  }
+
+  @media (max-width: 640px){
+    .aq-corner-oval{
+      border-top-left-radius: 999px 560px;
+    }
+  }
+}
+
 
 :root{
   --brand: #14545a;
@@ -77,7 +126,7 @@ img{ max-width: 100%; display: block; }
   z-index: 2;
   background:
     radial-gradient(1000px 500px at 25% 10%, rgba(0,0,0,.10), rgba(0,0,0,.18)),
-    linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.40));
+    linear-gradient(180deg, rgba(0,0,0,.12), rgba(11,22,23,1));
 }
 
 .hero-fade{
