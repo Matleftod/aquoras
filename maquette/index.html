@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="./tailwind.css" />
+    <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -37,23 +38,24 @@
   </header>
 
   <main>
-    <section id="accueil" class="hero" aria-label="Accueil">
-      <div class="hero-media" aria-hidden="true">
-        <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="./assets/hero-vineyard.jpg">
-          <source src="./assets/hero-vineyard.mp4" type="video/mp4" />
-        </video>
-        <div class="hero-overlay"></div>
-      </div>
+   <section id="accueil" class="hero" aria-label="Accueil">
+  <div class="hero-media" aria-hidden="true">
+    <video class="hero-video hero-video--a" playsinline muted preload="auto"></video>
+    <video class="hero-video hero-video--b" playsinline muted preload="auto"></video>
 
-      <div class="container hero-inner">
-        <h1 class="hero-title" data-intro>
-          Simplifiez vos achats ; optimisez vos approvisionnements
-        </h1>
-        <p class="hero-subtitle" data-intro>
-          Une seule plateforme pour comparer, consulter et sélectionner les meilleurs fournisseurs.
-        </p>
-      </div>
-    </section>
+    <div class="hero-fade" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+  </div>
+
+  <div class="container hero-inner">
+    <h1 class="hero-title" data-intro>
+      Simplifiez vos achats ; optimisez vos approvisionnements
+    </h1>
+    <p class="hero-subtitle" data-intro>
+      Une seule plateforme pour comparer, consulter et sélectionner les meilleurs fournisseurs.
+    </p>
+  </div>
+</section>
 
     <section id="projet" class="section vision" aria-label="Vision du projet">
         <div class="container">
@@ -202,82 +204,111 @@
         </div>
         </section>
 
-    <section id="pourqui" class="section audience" aria-label="Pour qui est ce projet">
-      <div class="container">
-        <h2 class="section-title" data-reveal>Pour qui est ce projet ?</h2>
-        <h3 class="section-subtitle" data-reveal>Une plateforme pensée pour deux acteurs</h3>
+    <section id="pourqui" class="section audience audience--dark" aria-label="Pour qui est ce projet">
+  <div class="container">
+    <h2 class="section-title" data-reveal>Pour qui est ce projet ?</h2>
+    <h3 class="section-subtitle" data-reveal>Une plateforme pensée pour deux acteurs</h3>
 
-        <div class="audience-grid">
-          <article class="audience-card" data-reveal>
-            <h4 class="audience-title">Exploitations viticoles</h4>
-            <ul class="audience-list">
-              <li>Gain de temps</li>
-              <li>Meilleure visibilité sur le marché</li>
-              <li>Décisions éclairées</li>
-            </ul>
-          </article>
-
-          <article class="audience-card" data-reveal>
-            <h4 class="audience-title">Fournisseurs</h4>
-            <ul class="audience-list">
-              <li>Accès à des appels d’offres qualifiés</li>
-              <li>Mise en avant des offres, pas du réseau</li>
-              <li>Opportunités commerciales équitables</li>
-            </ul>
-          </article>
+    <div class="audience-grid" data-reveal>
+      <article class="audience-card">
+        <div class="audience-media" aria-hidden="true">
+          <img class="audience-img" src="./assets/audience-viticoles.jpg" alt="" loading="lazy">
+          <span class="audience-media-overlay" aria-hidden="true"></span>
         </div>
-      </div>
-    </section>
 
-    <section id="equipe" class="section team" aria-label="Qui sommes-nous">
-      <div class="container">
-        <h2 class="section-title" data-reveal>Qui sommes-nous</h2>
+        <div class="audience-body">
+          <h4 class="audience-title">Exploitations viticoles</h4>
+          <ul class="audience-list">
+            <li>Gain de temps</li>
+            <li>Meilleure visibilité sur le marché</li>
+            <li>Décisions éclairées</li>
+          </ul>
+        </div>
+      </article>
 
-        <p class="section-text" data-reveal>
+      <article class="audience-card">
+        <div class="audience-media" aria-hidden="true">
+          <img class="audience-img" src="./assets/audience-fournisseurs.jpg" alt="" loading="lazy">
+          <span class="audience-media-overlay" aria-hidden="true"></span>
+        </div>
+
+        <div class="audience-body">
+          <h4 class="audience-title">Fournisseurs</h4>
+          <ul class="audience-list">
+            <li>Accès à des appels d’offres qualifiés</li>
+            <li>Mise en avant des offres, pas du réseau</li>
+            <li>Opportunités commerciales équitables</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+    <section id="equipe" class="team-contact" aria-label="Qui sommes-nous et contact">
+  <div class="container">
+    <div class="tc-card">
+      <header class="tc-head">
+        <h2 class="tc-title" data-reveal>Qui sommes-nous</h2>
+        <p class="tc-subtitle" data-reveal>
           Aqoras est né de la rencontre de deux profils complémentaires, experts des achats internationaux et du pilotage de projets industriels.
         </p>
+      </header>
 
-        <div class="team-grid">
-          <article class="person" data-reveal>
-            <img class="person-photo" src="./assets/gabriel.jpeg" alt="Photo de Gabriel Poitevin" />
-            <p class="person-text">
+      <div class="tc-rows">
+        <div class="tc-row tc-row--a" data-reveal>
+          <div class="tc-media">
+            <img src="./assets/gabriel.jpeg" alt="Photo de Gabriel Poitevin" loading="lazy" />
+          </div>
+          <div class="tc-copy">
+            <div class="tc-name">Gabriel Poitevin</div>
+            <p class="tc-text">
               Gabriel Poitevin, diplômé du Master MAI - KEDGE Business School, a évolué comme acheteur au sein de grands groupes industriels tels que Bouygues Construction, Thales et Forvia (ex-Faurecia), en France et en Italie. Il apporte une solide expertise en négociation, gestion fournisseurs et environnements industriels complexes.
             </p>
-          </article>
+          </div>
+        </div>
 
-          <article class="person" data-reveal>
-            <img class="person-photo" src="./assets/guillaume.jpeg" alt="Photo de Guillaume Robert" />
-            <p class="person-text">
+        <div class="tc-row tc-row--b" data-reveal>
+          <div class="tc-copy">
+            <div class="tc-name">Guillaume Robert</div>
+            <p class="tc-text">
               Guillaume Robert, également diplômé du Master MAI - KEDGE Business School, a travaillé comme acheteur pour BNP Paribas, Continental Automotive et Forvia (ex-Faurecia), en France et au Mexique. Il est spécialisé dans les achats stratégiques, les environnements multiculturels et la structuration de processus achats.
             </p>
-          </article>
+          </div>
+          <div class="tc-media">
+            <img src="./assets/guillaume.jpeg" alt="Photo de Guillaume Robert" loading="lazy" />
+          </div>
         </div>
+      </div>
 
-        <p class="section-text" data-reveal>
-          Ensemble, ils ont fondé Aqoras avec une ambition claire : mettre l’exigence des grands groupes au service de projets plus agiles, durables et innovants, en particulier dans les filières vin, spiritueux et packaging.
+        <p class="tc-final section-text" data-reveal>
+        Ensemble, ils ont fondé Aqoras avec une ambition claire : mettre l’exigence des grands groupes au service de projets plus agiles, durables et innovants, en particulier dans les filières vin, spiritueux et packaging.
         </p>
-      </div>
-    </section>
 
-    <section id="contact" class="section contact" aria-label="Nous contacter">
-      <div class="container">
-        <h2 class="section-title" data-reveal>Nous contacter</h2>
-
-        <div class="contact-grid">
-          <div class="contact-card" data-reveal>
-            <img class="contact-photo" src="./assets/gabriel.jpeg" alt="Photo de Gabriel Poitevin" />
-            <div class="contact-line skeleton" aria-hidden="true">06 12 34 56 78</div>
-          </div>
-
-          <div class="contact-card" data-reveal>
-            <img class="contact-photo" src="./assets/guillaume.jpeg" alt="Photo de Guillaume Robert" />
-            <div class="contact-line skeleton" aria-hidden="true">06 12 34 56 78</div>
-          </div>
+        <div id="contact" class="tc-contact" aria-label="Nous contacter">
+        <div class="tc-contact-grid" data-reveal>
+            <div class="tc-contact-item">
+            <div class="tc-contact-name">Gabriel Poitevin</div>
+            <a class="tc-contact-tel" href="tel:+33612345678">06 12 34 56 78</a>
+            </div>
+            <div class="tc-contact-item">
+            <div class="tc-contact-name">Guillaume Robert</div>
+            <a class="tc-contact-tel" href="tel:+33612345678">06 12 34 56 78</a>
+            </div>
         </div>
 
-        <a class="email" href="mailto:aqoras@outlook.com" data-reveal>aqoras@outlook.com</a>
-      </div>
-    </section>
+        <div class="tc-mail-wrap" data-reveal>
+            <a class="tc-mail" href="mailto:aqoras@outlook.com">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path d="M4 6.5h16v11H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+            </svg>
+            aqoras@outlook.com
+            </a>
+        </div>
+        </div>
+  </div>
+</section>
   </main>
 
   <script src="./script.js"></script>
