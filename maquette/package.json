@@ -2,9 +2,11 @@
   "name": "maquette",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tailwindcss -i ./app.css -o ./tailwind.css --watch",
+    "build": "tailwindcss -i ./app.css -o ./tailwind.css --minify",
+    "serve": "pnpm dlx serve ."
   },
   "keywords": [],
   "author": "",
