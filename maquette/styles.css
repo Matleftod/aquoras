@@ -131,7 +131,6 @@ img{ max-width: 100%; display: block; }
   min-height: 100svh;
   display: grid;
   align-items: center;
-  padding-top: 86px;
   overflow: clip;
 }
 
