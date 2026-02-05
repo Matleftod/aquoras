@@ -477,93 +477,120 @@ body.is-loaded [data-intro]{
   }
 }
 
-/* Products (tabs centrés + pictos alignés sans cadre) */
-.product-tabs{
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 14px;
-  margin-bottom: 22px;
+/* Products (boutons pill + mise en avant PNG) */
+.product-pillbar{
+  display: inline-flex;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(7,18,19,.12);
+  background: rgba(255,255,255,.62);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 55px rgba(7,18,19,.10);
 }
 
 .product-tab{
   appearance: none;
   border: 1px solid rgba(7,18,19,.10);
-  background: rgba(255,255,255,.82);
+  background: rgba(255,255,255,.70);
   border-radius: 999px;
-
-  padding: 14px 18px;
-  min-width: 140px;
-
-  font-weight: 900;
+  padding: 10px 16px;
+  min-width: 132px;
+  font-weight: 850;
   font-size: 14px;
   letter-spacing: .01em;
   color: rgba(11,22,23,.86);
-
   cursor: pointer;
-  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease, color .18s ease;
 }
 
 .product-tab:hover{
   transform: translateY(-1px);
-  background: rgba(255,255,255,.95);
-  border-color: rgba(20,84,90,.22);
+  background: rgba(255,255,255,.92);
+  border-color: rgba(20,84,90,.28);
+  box-shadow: 0 16px 40px rgba(20,84,90,.14);
 }
 
 .product-tab.is-active{
   background: rgba(20,84,90,.10);
-  border-color: rgba(20,84,90,.24);
+  border-color: rgba(20,84,90,.28);
+  box-shadow: 0 18px 55px rgba(20,84,90,.16);
+  color: rgba(11,22,23,.92);
 }
 
-/* ligne de pictos */
-.product-strip{
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: clamp(18px, 5vw, 56px);
-  flex-wrap: wrap;
-  padding-top: 8px;
+@media (max-width: 640px){
+  .product-pillbar{ flex-wrap: wrap; justify-content: center; }
+  .product-tab{ min-width: 120px; }
 }
 
-/* aucun cadre, juste une zone de hover */
-.product-item{
+/* Products (scene centrée, sans cards) */
+.product-scene{
+  position: relative;
+  margin-top: 26px;
   display: grid;
   place-items: center;
-  padding: 10px;
-  cursor: default;
-
-  opacity: .78;
-  filter: grayscale(1) brightness(.28) contrast(1.05);
-
-  transform: scale(1);
-  transition: transform .22s ease, filter .22s ease, opacity .22s ease;
-  transform-origin: center bottom;
+  min-height: clamp(220px, 28vw, 360px);
+  isolation: isolate;
 }
 
-.product-item:hover,
-.product-item.is-active{
+/* Tous les items se superposent au centre */
+.product-item{
+  grid-area: 1 / 1;
+  display: grid;
+  place-items: center;
+  cursor: default;
+  transform-origin: center bottom;
+  z-index: 1;
+}
+
+/* PNG */
+.product-icon{
+  width: clamp(120px, 16vw, 210px);
+  height: auto;
+  opacity: .70;
+  filter: grayscale(1) brightness(.30) contrast(1.08);
+  transform: translate3d(0,0,0) scale(1);
+  transition: transform .22s ease, filter .22s ease, opacity .22s ease;
+  will-change: transform, filter, opacity;
+}
+
+/* Actif / hover = couleur + scale */
+.product-item:hover .product-icon,
+.product-item.is-active .product-icon{
   opacity: 1;
   filter: none;
-  transform: scale(1.16);
-  z-index: 2;
+  transform: scale(1.14);
 }
 
-/* taille des pictos */
-.product-icon{
-  width: clamp(86px, 10vw, 140px);
-  height: auto;
-  color: rgba(20,84,90,.92);
+/* Mets l’actif un peu au-dessus */
+.product-item.is-active{ z-index: 4; }
+.product-item:hover{ z-index: 5; }
+
+/* Carton toujours derrière, même si actif/hover */
+.product-item[data-item="carton"]{
+  z-index: 0 !important;
 }
 
-/* optionnel : hiérarchie visuelle (bouteille un peu plus grande) */
-.product-item[data-item="bouteille"] .product-icon{
-  width: clamp(100px, 12vw, 170px);
+.product-item[data-item="carton"].is-active,
+.product-item[data-item="carton"]:hover{
+  z-index: 0 !important;
 }
 
-/* responsive */
-@media (max-width: 940px){
-  .product-tab{ min-width: 120px; }
+.product-item[data-item="bouteille"] .product-icon{ width: clamp(150px, 21vw, 270px); }
+.product-item[data-item="bouchon"]   .product-icon{ width: clamp(110px, 20vw, 300px); }
+.product-item[data-item="etiquette"] .product-icon{ width: clamp(100px, 9vw, 210px); }
+.product-item[data-item="carton"]    .product-icon{ width: clamp(130px, 40vw, 630px); }
+
+.product-shift--bouchon{ transform: translate(-80px, 160px); }
+.product-shift--etiquette{ transform: translate(1px, 31px); }
+.product-shift--carton{ transform: translate(145px, 70px); }
+
+
+/* Responsive : offsets plus soft sur mobile */
+@media (max-width: 640px){
+  .product-shift--bouchon{ transform: translate(-60px, 20px); }
+  .product-shift--etiquette{ transform: translate(70px, 10px); }
+  .product-shift--carton{ transform: translate(20px, 58px); }
 }
 
 /* Audience */

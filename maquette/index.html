@@ -258,52 +258,52 @@
 </div>
 </section>
 <section aria-label="Nos produits" class="section products" id="produits">
-<div class="container px-4">
-<h2 class="section-title text-3xl md:text-4xl font-semibold" data-reveal="">Nos produits</h2>
-<div aria-label="Catégories produits" class="product-tabs tabs tabs-boxed justify-center" data-reveal="" role="tablist">
-<button aria-selected="true" class="product-tab is-active tab tab-active" data-focus="bouteille" role="tab" type="button">
-                Bouteille
-            </button>
-<button aria-selected="false" class="product-tab tab" data-focus="bouchon" role="tab" type="button">
-                Bouchon
-            </button>
-<button aria-selected="false" class="product-tab tab" data-focus="etiquette" role="tab" type="button">
-                Étiquette
-            </button>
-<button aria-selected="false" class="product-tab tab" data-focus="carton" role="tab" type="button">
-                Carton
-            </button>
-</div>
-<div aria-label="Présentation des produits" class="product-strip mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 justify-items-center" data-reveal="">
-<div aria-label="Bouteille" class="product-item is-active card bg-base-100/70 shadow hover:shadow-md transition p-4 w-full max-w-[180px] flex items-center justify-center" data-item="bouteille">
-<svg aria-hidden="true" class="product-icon w-16 h-16" viewbox="0 0 120 120">
-<path d="M58 10c0 8-4 10-4 16v7c0 6 12 6 12 0v-7c0-6-4-8-4-16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="6"></path>
-<path d="M52 40c-10 10-12 20-12 34v20c0 10 8 18 20 18s20-8 20-18V74c0-14-2-24-12-34" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="6"></path>
-<path d="M46 78h28" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="6"></path>
-</svg>
-</div>
-<div aria-label="Bouchon" class="product-item card bg-base-100/70 shadow hover:shadow-md transition p-4 w-full max-w-[180px] flex items-center justify-center" data-item="bouchon">
-<svg aria-hidden="true" class="product-icon w-16 h-16" viewbox="0 0 120 120">
-<path d="M40 40c0-10 10-18 20-18s20 8 20 18v40c0 10-10 18-20 18s-20-8-20-18V40Z" fill="none" stroke="currentColor" stroke-width="6"></path>
-<path d="M40 54h40M40 66h40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="6"></path>
-</svg>
-</div>
-<div aria-label="Étiquette" class="product-item card bg-base-100/70 shadow hover:shadow-md transition p-4 w-full max-w-[180px] flex items-center justify-center" data-item="etiquette">
-<svg aria-hidden="true" class="product-icon w-16 h-16" viewbox="0 0 120 120">
-<path d="M34 28h52v64H34z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="6"></path>
-<path d="M42 44h36M42 58h28M42 72h32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="6"></path>
-</svg>
-</div>
-<div aria-label="Carton" class="product-item card bg-base-100/70 shadow hover:shadow-md transition p-4 w-full max-w-[180px] flex items-center justify-center" data-item="carton">
-<svg aria-hidden="true" class="product-icon w-16 h-16" viewbox="0 0 120 120">
-<path d="M20 44l40-18 40 18-40 18-40-18Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="6"></path>
-<path d="M20 44v32l40 18 40-18V44" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="6"></path>
-<path d="M60 62v32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="6"></path>
-</svg>
-</div>
-</div>
-</div>
+  <div class="container px-4">
+    <div class="text-center" data-reveal="">
+    <h2 class="section-title text-3xl md:text-4xl font-semibold">
+        Nos produits
+    </h2>
+
+    <div aria-label="Catégories produits" class="product-pillbar mx-auto mt-6" role="tablist">
+        <button aria-selected="false" class="product-tab" data-focus="bouteille" role="tab" type="button">
+        Bouteille
+        </button>
+        <button aria-selected="false" class="product-tab" data-focus="bouchon" role="tab" type="button">
+        Bouchon
+        </button>
+        <button aria-selected="false" class="product-tab" data-focus="etiquette" role="tab" type="button">
+        Étiquette
+        </button>
+        <button aria-selected="false" class="product-tab" data-focus="carton" role="tab" type="button">
+        Carton
+        </button>
+    </div>
+
+    <p class="mt-3 text-sm text-base-content/60">
+        Survole une catégorie pour mettre en avant le produit
+    </p>
+    </div>
+
+    <div aria-label="Présentation des produits" class="product-scene" data-reveal="">
+    <div aria-label="Bouteille" class="product-item" data-item="bouteille">
+        <img class="product-icon" src="./assets/bouteille.png" alt="Bouteille" loading="lazy" />
+    </div>
+
+    <div aria-label="Bouchon" class="product-item product-shift product-shift--bouchon" data-item="bouchon">
+        <img class="product-icon" src="./assets/bouchon.png" alt="Bouchon" loading="lazy" />
+    </div>
+
+    <div aria-label="Étiquette" class="product-item product-shift product-shift--etiquette" data-item="etiquette">
+        <img class="product-icon" src="./assets/etiquette.png" alt="Étiquette" loading="lazy" />
+    </div>
+
+    <div aria-label="Carton" class="product-item product-shift product-shift--carton" data-item="carton">
+        <img class="product-icon" src="./assets/carton.png" alt="Carton" loading="lazy" />
+    </div>
+    </div>
+  </div>
 </section>
+
 <section aria-label="Pour qui est ce projet" class="section audience audience--dark py-16" id="pourqui">
 <div class="container px-4">
 <h2 class="section-title text-3xl md:text-4xl font-semibold" data-reveal="">Pour qui est ce projet ?</h2>

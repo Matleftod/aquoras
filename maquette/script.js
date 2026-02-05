@@ -98,7 +98,6 @@ function setupProcessRoadmap(){
     i.addEventListener("mouseenter", () => setActive(i.dataset.item));
   });
 
-  setActive("bouteille");
 })();
 
 window.addEventListener("load", () => {
