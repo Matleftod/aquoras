@@ -648,12 +648,6 @@ body.is-loaded [data-intro]{
   box-shadow: 0 30px 90px rgba(0,0,0,.34);
 }
 
-.audience-media{
-  position: relative;
-  aspect-ratio: 16 / 9;
-  background: rgba(7,18,19,.10);
-}
-
 .audience-img{
   width: 100%;
   height: 100%;
