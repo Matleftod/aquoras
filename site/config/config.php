@@ -1,9 +1,17 @@
 <?php
 
 return [
-  'debug' => true,
+  'debug' => false,
+  'panel' => [
+    'install' => false,
+  ],
+  'cache' => [
+    'pages' => [
+      'active' => false,
+    ],
+  ],
   'vite' => [
-    'dev' => true,
-    'server' => 'http://localhost:5173',
+    'dev' => false,
+    'server' => null,
   ],
 ];

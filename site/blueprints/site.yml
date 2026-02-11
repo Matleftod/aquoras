@@ -1,5 +1,16 @@
 title: Site
 
-sections:
-  pages:
-    type: pages
+tabs:
+  content:
+    label: Contenu
+    sections:
+      pages:
+        type: pages
+  seo:
+    label: SEO
+    fields:
+      seoDescription:
+        label: Description globale (fallback)
+        type: textarea
+        buttons: false
+        maxlength: 160
