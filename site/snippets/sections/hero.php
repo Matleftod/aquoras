@@ -1,10 +1,12 @@
-<?php /** @var string $assetBase */ ?>
 <section aria-label="Accueil" class="hero min-h-screen relative overflow-hidden" id="accueil">
-  <div aria-hidden="true" class="hero-media">
+  <div class="hero-media"
+    data-force-video="1"
+    data-video-base="<?= $assetBase ?>/videos"
+    data-poster-base="<?= $assetBase ?>/images">
+    <img class="hero-poster" alt="" loading="eager" fetchpriority="high" />
     <video class="hero-video hero-video--a" muted playsinline preload="auto"></video>
-    <video class="hero-video hero-video--b" muted playsinline preload="auto"></video>
-    <div aria-hidden="true" class="hero-fade"></div>
-    <div aria-hidden="true" class="hero-overlay"></div>
+    <video class="hero-video hero-video--b" muted playsinline preload="metadata"></video>
+    <div class="hero-fade" aria-hidden="true"></div>
   </div>
 
   <div class="hero-content w-full px-4 pb-14">
