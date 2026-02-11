@@ -1,0 +1,27 @@
+title: Accueil
+status:
+  listed: true
+  unlisted: true
+  draft: true
+
+tabs:
+  content:
+    label: Contenu
+    fields:
+      headline:
+        type: text
+        label: Titre hero
+      subheadline:
+        type: textarea
+        label: Sous-titre hero
+        buttons: false
+  seo:
+    label: SEO
+    fields:
+      seoTitle:
+        type: text
+        label: Titre SEO
+      seoDescription:
+        type: textarea
+        label: Description SEO
+        buttons: false
