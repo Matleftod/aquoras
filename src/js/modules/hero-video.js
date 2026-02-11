@@ -1,22 +1,22 @@
 function getAssetBase() {
-  return (window.__AQ_ASSET_BASE && String(window.__AQ_ASSET_BASE)) || "";
+  return (window.__AQ_ASSET_BASE && String(window.__AQ_ASSET_BASE)) || '';
 }
 
 export function setupHeroVideoCarousel() {
-  const root = document.querySelector("#accueil .hero-media");
+  const root = document.querySelector('#accueil .hero-media');
   if (!root) return;
 
-  const a = root.querySelector(".hero-video--a");
-  const b = root.querySelector(".hero-video--b");
-  const fade = root.querySelector(".hero-fade");
+  const a = root.querySelector('.hero-video--a');
+  const b = root.querySelector('.hero-video--b');
+  const fade = root.querySelector('.hero-fade');
   if (!a || !b || !fade) return;
 
   const base = getAssetBase();
   const videos = [
-    `${base}/hero-vineyard.mp4`,
-    `${base}/hero-bottle.mp4`,
-    `${base}/hero-cuve.mp4`,
-    `${base}/hero-fournisseur.mp4`,
+    `${base}/videos/hero-vineyard.mp4`,
+    `${base}/videos/hero-bottle.mp4`,
+    `${base}/videos/hero-cuve.mp4`,
+    `${base}/videos/hero-fournisseur.mp4`,
   ];
 
   const MAX_SECONDS = 7;
@@ -50,23 +50,23 @@ export function setupHeroVideoCarousel() {
   };
 
   const transition = () => {
-    fade.classList.add("is-on");
+    fade.classList.add('is-on');
 
     window.setTimeout(async () => {
       back.currentTime = 0;
       await playSafe(back);
 
-      back.classList.add("is-active");
-      front.classList.remove("is-active");
+      back.classList.add('is-active');
+      front.classList.remove('is-active');
 
       [front, back] = [back, front];
       idx = (idx + 1) % videos.length;
 
       setSource(back, videos[(idx + 1) % videos.length]);
-      back.classList.remove("is-active");
+      back.classList.remove('is-active');
       back.currentTime = 0;
 
-      requestAnimationFrame(() => fade.classList.remove("is-on"));
+      requestAnimationFrame(() => fade.classList.remove('is-on'));
       scheduleNext();
     }, FADE_MS);
   };
@@ -79,12 +79,12 @@ export function setupHeroVideoCarousel() {
   setSource(front, videos[idx]);
   setSource(back, videos[(idx + 1) % videos.length]);
 
-  front.classList.add("is-active");
-  back.classList.remove("is-active");
-  fade.classList.remove("is-on");
+  front.classList.add('is-active');
+  back.classList.remove('is-active');
+  fade.classList.remove('is-on');
 
   playSafe(front);
   scheduleNext();
 
-  window.addEventListener("pointerdown", () => playSafe(front), { once: true });
+  window.addEventListener('pointerdown', () => playSafe(front), { once: true });
 }
