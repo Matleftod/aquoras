@@ -1,9 +1,40 @@
 @import 'tailwindcss';
 
+/* Active daisyUI et limite les thèmes (sinon tu en charges 35) */
 @plugin "daisyui" {
   themes:
-    light --default,
+    aqoras --default,
     dark --prefersdark;
+}
+
+/* Déclare le thème custom (daisyUI v5) */
+@plugin "daisyui/theme" {
+  name: 'aqoras';
+  default: true;
+
+  --color-primary: #14545a;
+  --color-primary-content: #ffffff;
+
+  --color-secondary: #79b7bc;
+  --color-secondary-content: #062527;
+
+  --color-accent: #d6a24b;
+  --color-accent-content: #1b1205;
+
+  --color-neutral: #0b1617;
+  --color-neutral-content: #eaf1f1;
+
+  --color-base-100: #f7f8f7;
+  --color-base-200: #eef2f2;
+  --color-base-300: #e2e8e8;
+  --color-base-content: #0b1617;
+
+  --radius-box: 1.6rem;
+  --radius-btn: 999px;
+  --radius-badge: 999px;
+
+  --btn-text-case: none;
+  --border-btn: 1px;
 }
 
 @import './components.css';

@@ -3,7 +3,7 @@
 /** @var string $assetBase */ ?>
 <section aria-label="Comment fonctionne la plateforme" class="section process process--video py-16" id="fonctionnement">
   <div aria-hidden="true" class="soft-video">
-    <video autoplay class="soft-video-media" loop muted playsinline poster="<?= $assetBase ?>/videos/hero-vineyard.jpg" preload="metadata">
+    <video autoplay class="soft-video-media" loop muted playsinline poster="<?= $assetBase ?>/hero-vineyard.jpg" preload="metadata">
       <source src="<?= $assetBase ?>/videos/hero-vineyard.mp4" type="video/mp4">
     </video>
   </div>
