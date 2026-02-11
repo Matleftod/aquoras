@@ -116,7 +116,7 @@ img {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: #000; /* jamais de flash clair */
+  background: #0b1617; /* jamais de flash clair */
   pointer-events: none;
 }
 
@@ -166,17 +166,57 @@ img {
     linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.18) 55%, #0b1617 100%);
 }
 
+.hero-fade.is-on {
+  opacity: 1;
+}
+
+/* Overlay global (contraste + mood) */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      1000px 500px at 25% 10%,
+      rgba(0, 0, 0, 0.16) 0%,
+      rgba(0, 0, 0, 0.1) 35%,
+      rgba(0, 0, 0, 0) 72%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.12) 0%,
+      rgba(0, 0, 0, 0.18) 55%,
+      rgba(11, 22, 23, 0) 100%
+    );
+}
+
+/* Fade bas vers la couleur de la section suivante */
+.hero-bottom-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(120px, 22vh, 260px);
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 22, 23, 0) 0%,
+    rgba(11, 22, 23, 0.65) 55%,
+    #0b1617 100%
+  );
+}
+
+/* Fade entre vidéos (ne doit pas couvrir en permanence) */
 .hero-fade {
   position: absolute;
   inset: 0;
   z-index: 3;
-  background: #000;
+  pointer-events: none;
+  background: #0b1617;
   opacity: 0;
   transition: opacity var(--hero-fade) ease;
-}
-
-.hero-fade.is-on {
-  opacity: 1;
 }
 
 /* Intro animation: from below + fade (Innoha-like) */

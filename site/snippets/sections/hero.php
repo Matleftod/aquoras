@@ -6,6 +6,8 @@
     <img class="hero-poster" alt="" loading="eager" fetchpriority="high" />
     <video class="hero-video hero-video--a" muted playsinline preload="auto"></video>
     <video class="hero-video hero-video--b" muted playsinline preload="metadata"></video>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-bottom-fade" aria-hidden="true"></div>
     <div class="hero-fade" aria-hidden="true"></div>
   </div>
 
