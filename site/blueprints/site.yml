@@ -3,12 +3,27 @@ title: Site
 tabs:
   content:
     label: Contenu
-    sections:
-      pages:
-        type: pages
+    columns:
+      left:
+        width: 1/3
+        fields:
+          title:
+            label: Titre du site
+            type: text
+
+      right:
+        width: 2/3
+        sections:
+          pages:
+            type: pages
+
   seo:
     label: SEO
     fields:
+      seoTitle:
+        label: Titre SEO global (fallback)
+        type: text
+        maxlength: 60
       seoDescription:
         label: Description globale (fallback)
         type: textarea

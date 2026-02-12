@@ -6,7 +6,7 @@ return [
   ],
   'cache' => [
     'pages' => [
-      'active' => false,
+      'active' => true,
     ],
   ],
   'panel' => [
