@@ -147,36 +147,50 @@ export function setupHeroVideoCarousel() {
   const transition = async () => {
     if (!running) return;
 
+    const outgoing = front;
+    const incoming = back;
+
     fade.classList.add('is-on');
 
     window.setTimeout(async () => {
-      back.currentTime = 0;
+      incoming.currentTime = 0;
 
-      const ok = await waitPlayable(front, 10000);
-      const okToPlay = await waitPlayable(back, 10000);
+      const okToPlay = await waitPlayable(incoming, 10000);
       if (!okToPlay) {
         showPosterOnly(clips[idx]?.poster);
         return;
       }
 
-      const played = await playSafe(back);
+      const played = await playSafe(incoming);
       if (!played) {
         showPosterOnly(clips[idx]?.poster);
         return;
       }
 
-      back.classList.add('is-active');
-      front.classList.remove('is-active');
+      // Switch visible video
+      incoming.classList.add('is-active');
+      outgoing.classList.remove('is-active');
 
-      [front, back] = [back, front];
+      // Update pointers/index for next cycle
+      front = incoming;
+      back = outgoing;
       idx = (idx + 1) % clips.length;
 
-      const nextClip = clips[(idx + 1) % clips.length];
-      applyClipTo(back, nextClip, 'metadata');
-      back.classList.remove('is-active');
-      back.currentTime = 0;
+      // Remove fade once the incoming video has started rendering
+      if (front.requestVideoFrameCallback) {
+        front.requestVideoFrameCallback(() => fade.classList.remove('is-on'));
+      } else {
+        requestAnimationFrame(() => fade.classList.remove('is-on'));
+      }
 
-      requestAnimationFrame(() => fade.classList.remove('is-on'));
+      // IMPORTANT: wait for outgoing to be fully faded out before changing its sources
+      window.setTimeout(() => {
+        const nextClip = clips[(idx + 1) % clips.length];
+        applyClipTo(back, nextClip, 'metadata');
+        back.classList.remove('is-active');
+        back.currentTime = 0;
+      }, FADE_MS);
+
       scheduleNext();
     }, FADE_MS);
   };
