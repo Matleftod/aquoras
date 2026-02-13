@@ -1,4 +1,6 @@
-<?php /** @var string $assetBase */ ?>
+<?php
+
+/** @var string $assetBase */ ?>
 <section aria-label="Vision du projet" id="projet"
   class="relative min-h-screen overflow-hidden bg-neutral text-neutral-content flex items-center">
   <div class="container relative z-10 px-4 py-16 md:py-24">
@@ -95,14 +97,12 @@
            w-[420px] h-[420px]
            sm:w-[520px] sm:h-[470px]
            lg:w-[640px] lg:h-[540px]
-           overflow-hidden aq-corner-oval translate-x-6 translate-y-8 opacity-95"
-  >
+           overflow-hidden aq-corner-oval translate-x-6 translate-y-8 opacity-95">
     <img
       alt=""
       loading="lazy"
-      src="<?= $assetBase ?>/projet.jpg"
-      class="h-full w-full object-cover"
-    >
+      src="<?= $assetBase ?>/projet.avif"
+      class="h-full w-full object-cover">
     <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent"></div>
   </div>
 </section>

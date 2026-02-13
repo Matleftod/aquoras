@@ -20,52 +20,51 @@ function pickType(videoEl, types) {
   return '';
 }
 
-function buildSources(videoEl, videoBase, name) {
-  const AV1_TYPES = [
-    'video/mp4; codecs="av01.0.05M.08"',
-    'video/mp4; codecs="av01.0.08M.08"',
-    'video/mp4; codecs="av01.0.05M.10"',
-    'video/mp4; codecs="av01"',
+function buildSources(videoBase, name) {
+  return [
+    { src: `${videoBase}/${name}.av1.mp4`, type: 'video/mp4; codecs="av01.0.05M.08"' },
+    { src: `${videoBase}/${name}.hevc.mp4`, type: 'video/mp4; codecs="hvc1"' },
+    { src: `${videoBase}/${name}.mp4`, type: 'video/mp4; codecs="avc1.42E01E"' },
+    { src: `${videoBase}/${name}.mp4`, type: 'video/mp4' },
   ];
-
-  const HEVC_TYPES = [
-    'video/mp4; codecs="hvc1.1.6.L120.90"',
-    'video/mp4; codecs="hvc1"',
-    'video/mp4; codecs="hev1"',
-  ];
-
-  const H264_TYPES = ['video/mp4; codecs="avc1.42E01E"', 'video/mp4'];
-
-  const sources = [];
-
-  const av1Type = pickType(videoEl, AV1_TYPES);
-  if (av1Type) {
-    sources.push({ src: `${videoBase}/${name}.av1.mp4`, type: av1Type });
-  }
-
-  const hevcType = pickType(videoEl, HEVC_TYPES);
-  if (hevcType) {
-    sources.push({ src: `${videoBase}/${name}.hevc.mp4`, type: hevcType });
-  }
-
-  const h264Type = pickType(videoEl, H264_TYPES) || 'video/mp4';
-  sources.push({ src: `${videoBase}/${name}.mp4`, type: h264Type });
-
-  return sources;
 }
 
-function setOnceSources(videoEl, sources) {
+function setOnceSources(videoEl, candidates) {
   if (videoEl.dataset.sourcesSet === '1') return;
   videoEl.dataset.sourcesSet = '1';
 
-  for (const s of sources) {
-    const can = videoEl.canPlayType(s.type);
-    if (!can) continue;
+  let i = 0;
+
+  const setCandidate = (c) => {
+    videoEl.querySelectorAll('source').forEach((s) => s.remove());
     const source = document.createElement('source');
-    source.src = s.src;
-    source.type = s.type;
+    source.src = c.src;
+    source.type = c.type;
     videoEl.appendChild(source);
-  }
+    videoEl.load();
+  };
+
+  const tryNext = () => {
+    while (i < candidates.length) {
+      const c = candidates[i++];
+      const r = videoEl.canPlayType(c.type);
+      if (r === 'probably' || r === 'maybe') {
+        setCandidate(c);
+        return;
+      }
+    }
+  };
+
+  videoEl.addEventListener(
+    'error',
+    () => {
+      // si le format choisi plante au decode, on tente le suivant
+      tryNext();
+    },
+    { once: false },
+  );
+
+  tryNext();
 }
 
 function waitReady(videoEl, timeoutMs = 12000) {
@@ -153,7 +152,7 @@ export function setupHeroVideoCarousel() {
     v.disablePictureInPicture = true;
 
     if (c.poster) v.poster = c.poster;
-    setOnceSources(v, buildSources(v, videoBase, c.name));
+    setOnceSources(v, buildSources(videoBase, c.name));
   }
 
   const FADE_MS = 320;

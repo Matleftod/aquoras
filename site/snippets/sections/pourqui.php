@@ -1,4 +1,6 @@
-<?php /** @var string $assetBase */ ?>
+<?php
+
+/** @var string $assetBase */ ?>
 <section aria-label="Pour qui est ce projet" class="section audience audience--dark py-16" id="pourqui">
   <div class="container px-4">
     <h2 class="section-title text-3xl md:text-4xl font-semibold" data-reveal>Pour qui est ce projet ?</h2>
@@ -7,7 +9,7 @@
     <div class="audience-grid" data-reveal>
       <article class="audience-card">
         <div aria-hidden="true" class="audience-media">
-          <img alt="" class="audience-img" loading="lazy" src="<?= $assetBase ?>/audience-viticoles.jpg">
+          <img alt="" class="audience-img" loading="lazy" src="<?= $assetBase ?>/audience-viticoles.avif">
           <span aria-hidden="true" class="audience-media-overlay"></span>
         </div>
         <div class="audience-body">
@@ -22,7 +24,7 @@
 
       <article class="audience-card">
         <div aria-hidden="true" class="audience-media">
-          <img alt="" class="audience-img" loading="lazy" src="<?= $assetBase ?>/audience-fournisseurs.jpg">
+          <img alt="" class="audience-img" loading="lazy" src="<?= $assetBase ?>/audience-fournisseurs.avif">
           <span aria-hidden="true" class="audience-media-overlay"></span>
         </div>
         <div class="audience-body">
