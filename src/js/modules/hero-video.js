@@ -10,35 +10,67 @@ const saveData = () =>
   navigator.connection &&
   navigator.connection.saveData === true;
 
-function buildSources(videoEl, videoBase, name) {
-  const candidates = [
-    { src: `${videoBase}/${name}.av1.mp4`, type: 'video/mp4; codecs="av01"' },
-    { src: `${videoBase}/${name}.hevc.mp4`, type: 'video/mp4; codecs="hvc1"' },
-    { src: `${videoBase}/${name}.mp4`, type: 'video/mp4' },
-  ];
+const effectiveType = () => (navigator.connection && navigator.connection.effectiveType) || '';
 
-  return candidates.filter((c) => videoEl.canPlayType(c.type));
+function pickType(videoEl, types) {
+  for (const t of types) {
+    const r = videoEl.canPlayType(t);
+    if (r === 'probably' || r === 'maybe') return t;
+  }
+  return '';
 }
 
-function setVideoSources(videoEl, sources) {
-  videoEl.pause();
-  videoEl.removeAttribute('src');
-  videoEl.querySelectorAll('source').forEach((s) => s.remove());
+function buildSources(videoEl, videoBase, name) {
+  const AV1_TYPES = [
+    'video/mp4; codecs="av01.0.05M.08"',
+    'video/mp4; codecs="av01.0.08M.08"',
+    'video/mp4; codecs="av01.0.05M.10"',
+    'video/mp4; codecs="av01"',
+  ];
+
+  const HEVC_TYPES = [
+    'video/mp4; codecs="hvc1.1.6.L120.90"',
+    'video/mp4; codecs="hvc1"',
+    'video/mp4; codecs="hev1"',
+  ];
+
+  const H264_TYPES = ['video/mp4; codecs="avc1.42E01E"', 'video/mp4'];
+
+  const sources = [];
+
+  const av1Type = pickType(videoEl, AV1_TYPES);
+  if (av1Type) {
+    sources.push({ src: `${videoBase}/${name}.av1.mp4`, type: av1Type });
+  }
+
+  const hevcType = pickType(videoEl, HEVC_TYPES);
+  if (hevcType) {
+    sources.push({ src: `${videoBase}/${name}.hevc.mp4`, type: hevcType });
+  }
+
+  const h264Type = pickType(videoEl, H264_TYPES) || 'video/mp4';
+  sources.push({ src: `${videoBase}/${name}.mp4`, type: h264Type });
+
+  return sources;
+}
+
+function setOnceSources(videoEl, sources) {
+  if (videoEl.dataset.sourcesSet === '1') return;
+  videoEl.dataset.sourcesSet = '1';
 
   for (const s of sources) {
+    const can = videoEl.canPlayType(s.type);
+    if (!can) continue;
     const source = document.createElement('source');
     source.src = s.src;
     source.type = s.type;
     videoEl.appendChild(source);
   }
-
-  videoEl.load();
 }
 
-function waitPlayable(videoEl, timeoutMs = 10000) {
+function waitReady(videoEl, timeoutMs = 12000) {
   return new Promise((resolve) => {
-    // déjà prêt
-    if (videoEl.readyState >= 2) return resolve(true);
+    if (videoEl.readyState >= 3) return resolve(true); // HAVE_FUTURE_DATA
 
     let done = false;
     const finish = (ok) => {
@@ -49,18 +81,20 @@ function waitPlayable(videoEl, timeoutMs = 10000) {
     };
 
     const onOk = () => finish(true);
-    const onError = () => finish(false);
+    const onErr = () => finish(false);
 
     const cleanup = () => {
       clearTimeout(t);
-      videoEl.removeEventListener('loadedmetadata', onOk);
       videoEl.removeEventListener('canplay', onOk);
-      videoEl.removeEventListener('error', onError);
+      videoEl.removeEventListener('canplaythrough', onOk);
+      videoEl.removeEventListener('stalled', onErr);
+      videoEl.removeEventListener('error', onErr);
     };
 
-    videoEl.addEventListener('loadedmetadata', onOk, { once: true });
     videoEl.addEventListener('canplay', onOk, { once: true });
-    videoEl.addEventListener('error', onError, { once: true });
+    videoEl.addEventListener('canplaythrough', onOk, { once: true });
+    videoEl.addEventListener('stalled', onErr, { once: true });
+    videoEl.addEventListener('error', onErr, { once: true });
 
     const t = setTimeout(() => finish(false), timeoutMs);
   });
@@ -84,175 +118,183 @@ export function setupHeroVideoCarousel() {
   if (!root) return;
 
   const forceVideo = root.getAttribute('data-force-video') === '1';
-
   if (!forceVideo && (prefersReducedMotion() || saveData())) {
     root.classList.add('no-video');
     return;
   }
 
-  const a = root.querySelector('.hero-video--a');
-  const b = root.querySelector('.hero-video--b');
-  const fade = root.querySelector('.hero-fade');
-  const posterImg = root.querySelector('.hero-poster');
-
-  if (!a || !b || !fade) return;
-
   const base = getAssetBase();
   const videoBase = root.getAttribute('data-video-base') || `${base}/videos`;
   const posterBase = root.getAttribute('data-poster-base') || `${base}/images`;
+  const fade = root.querySelector('.hero-fade');
+  const posterImg = root.querySelector('.hero-poster');
 
   const clips = [
-    { name: 'hero-vineyard', poster: `${posterBase}/hero-vineyard.jpg` },
-    { name: 'hero-bottle', poster: `${posterBase}/hero-bottle.jpg` },
-    { name: 'hero-cuve', poster: `${posterBase}/hero-cuve.jpg` },
-    { name: 'hero-fournisseur', poster: `${posterBase}/hero-fournisseur.jpg` },
+    { key: 'vineyard', name: 'hero-vineyard', poster: `${posterBase}/hero-vineyard.jpg` },
+    { key: 'bottle', name: 'hero-bottle', poster: `${posterBase}/hero-bottle.jpg` },
+    { key: 'cuve', name: 'hero-cuve', poster: `${posterBase}/hero-cuve.jpg` },
+    { key: 'fournisseur', name: 'hero-fournisseur', poster: `${posterBase}/hero-fournisseur.jpg` },
   ];
 
+  const els = new Map();
+  root.querySelectorAll('video.hero-video').forEach((v) => {
+    const k = v.dataset.clip;
+    if (k) els.set(k, v);
+  });
+
+  // sécurité
+  for (const c of clips) {
+    const v = els.get(c.key);
+    if (!v) return;
+
+    v.loop = false;
+    v.autoplay = false;
+    v.controls = false;
+    v.disablePictureInPicture = true;
+
+    if (c.poster) v.poster = c.poster;
+    setOnceSources(v, buildSources(v, videoBase, c.name));
+  }
+
+  const FADE_MS = 320;
+  const HOLD_MS = 120;
   const MAX_SECONDS = 7;
-  const FADE_MS = 280;
-  const SAFETY_MS = 80;
+
+  if (posterImg && clips[0]?.poster) posterImg.src = clips[0].poster;
+
+  // stratégie preload
+  const slow = saveData() || /(^|-)2g$/.test(effectiveType());
+  if (!slow) {
+    setTimeout(() => {
+      for (const v of els.values()) v.preload = 'auto';
+    }, 1200);
+  }
 
   let idx = 0;
-  let front = a;
-  let back = b;
   let timer = 0;
   let running = true;
 
-  const applyClipTo = (videoEl, clip, preload = 'metadata') => {
-    videoEl.preload = preload;
-    videoEl.loop = false;
-    videoEl.autoplay = false;
-    videoEl.controls = false;
-    videoEl.disablePictureInPicture = true;
-    videoEl.setAttribute('playsinline', '');
-    videoEl.setAttribute('muted', '');
-    if (clip.poster) videoEl.poster = clip.poster;
-    setVideoSources(videoEl, buildSources(videoEl, videoBase, clip.name));
+  const show = (v) => v.classList.add('is-active');
+  const hide = (v) => v.classList.remove('is-active');
+
+  const current = () => els.get(clips[idx].key);
+  const next = () => els.get(clips[(idx + 1) % clips.length].key);
+
+  const duration = (v) => {
+    const d = Number.isFinite(v.duration) && v.duration > 0 ? v.duration : MAX_SECONDS;
+    return Math.min(MAX_SECONDS, d);
   };
 
   const showPosterOnly = (posterUrl) => {
     root.classList.add('no-video');
     if (posterImg && posterUrl) posterImg.src = posterUrl;
-    front.pause();
-    back.pause();
+    for (const v of els.values()) v.pause();
     running = false;
     clearTimeout(timer);
   };
 
-  const scheduleNext = () => {
+  const XFADE_MS = 900; // doit matcher --hero-xfade
+
+  const schedule = () => {
     clearTimeout(timer);
-    timer = window.setTimeout(transition, MAX_SECONDS * 1000 - FADE_MS - SAFETY_MS);
+    const v = current();
+    const d = duration(v);
+    const t = Math.max(0, v.currentTime || 0);
+    const remainingMs = Math.max(0, (d - t) * 1000);
+    const delay = Math.max(200, remainingMs - XFADE_MS - 80);
+    timer = window.setTimeout(transition, delay);
   };
 
   const transition = async () => {
-    if (!running) return;
+    if (!running || document.hidden) return;
 
-    const outgoing = front;
-    const incoming = back;
+    const out = current();
+    const inc = next();
 
-    fade.classList.add('is-on');
+    inc.currentTime = 0;
 
-    window.setTimeout(async () => {
-      incoming.currentTime = 0;
+    const ok = await waitReady(inc, 12000);
+    if (!ok) {
+      showPosterOnly(clips[(idx + 1) % clips.length]?.poster);
+      return;
+    }
 
-      const okToPlay = await waitPlayable(incoming, 10000);
-      if (!okToPlay) {
-        showPosterOnly(clips[idx]?.poster);
-        return;
-      }
+    const played = await playSafe(inc);
+    if (!played) {
+      root.classList.add('needs-gesture');
+      return;
+    }
 
-      const played = await playSafe(incoming);
-      if (!played) {
-        showPosterOnly(clips[idx]?.poster);
-        return;
-      }
+    // Crossfade
+    inc.classList.add('is-active');
+    out.classList.remove('is-active');
 
-      // Switch visible video
-      incoming.classList.add('is-active');
-      outgoing.classList.remove('is-active');
+    // Après le crossfade, on gèle l’ancienne vidéo (sinon elle continue et peut “attirer l’œil”)
+    setTimeout(() => {
+      out.pause();
+      try {
+        out.currentTime = 0;
+      } catch {}
+    }, XFADE_MS + 40);
 
-      // Update pointers/index for next cycle
-      front = incoming;
-      back = outgoing;
-      idx = (idx + 1) % clips.length;
-
-      // Remove fade once the incoming video has started rendering
-      if (front.requestVideoFrameCallback) {
-        front.requestVideoFrameCallback(() => fade.classList.remove('is-on'));
-      } else {
-        requestAnimationFrame(() => fade.classList.remove('is-on'));
-      }
-
-      // IMPORTANT: wait for outgoing to be fully faded out before changing its sources
-      window.setTimeout(() => {
-        const nextClip = clips[(idx + 1) % clips.length];
-        applyClipTo(back, nextClip, 'metadata');
-        back.classList.remove('is-active');
-        back.currentTime = 0;
-      }, FADE_MS);
-
-      scheduleNext();
-    }, FADE_MS);
+    idx = (idx + 1) % clips.length;
+    schedule();
   };
 
   // init
   root.classList.remove('no-video');
-  fade.classList.remove('is-on');
+  fade?.classList.remove('is-on');
 
-  const first = clips[0];
-  const second = clips[1];
-
-  if (posterImg && first?.poster) {
-    posterImg.src = first.poster;
-  }
-
-  applyClipTo(front, first, 'auto'); // on veut démarrer vite
-  applyClipTo(back, second, 'metadata'); // on prépare le suivant sans tout télécharger
-
-  front.classList.add('is-active');
-  back.classList.remove('is-active');
+  for (const v of els.values()) hide(v);
+  const first = current();
+  show(first);
 
   (async () => {
-    const ok = await waitPlayable(front, 3000);
+    const ok = await waitReady(first, 12000);
     if (!ok) {
-      showPosterOnly(first?.poster);
+      showPosterOnly(clips[0]?.poster);
       return;
     }
-
-    const played = await playSafe(front);
+    const played = await playSafe(first);
     if (!played) {
-      // autoplay bloqué, on garde l’image, et on retente au premier geste utilisateur
       root.classList.add('needs-gesture');
     } else {
       root.classList.add('has-video');
-      scheduleNext();
+      schedule();
     }
   })();
 
+  // au premier geste, relance si autoplay bloqué
   window.addEventListener(
     'pointerdown',
     async () => {
       if (!running) return;
-      if (root.classList.contains('needs-gesture')) {
-        const played = await playSafe(front);
-        if (played) {
-          root.classList.remove('needs-gesture');
-          root.classList.add('has-video');
-          scheduleNext();
-        }
+      if (!root.classList.contains('needs-gesture')) return;
+      const played = await playSafe(current());
+      if (played) {
+        root.classList.remove('needs-gesture');
+        root.classList.add('has-video');
+        schedule();
       }
     },
     { once: true },
   );
 
-  document.addEventListener('visibilitychange', () => {
+  document.addEventListener('visibilitychange', async () => {
     if (document.hidden) {
-      front.pause();
-      back.pause();
       clearTimeout(timer);
-    } else if (running && root.classList.contains('has-video')) {
-      playSafe(front);
-      scheduleNext();
+      current()?.pause();
+      return;
     }
+    if (!running || !root.classList.contains('has-video')) return;
+    await playSafe(current());
+    schedule();
   });
+
+  // upgrade preload plus tard si connexion OK
+  if (!slow) {
+    setTimeout(() => {
+      for (const v of els.values()) v.preload = 'auto';
+    }, 1500);
+  }
 }

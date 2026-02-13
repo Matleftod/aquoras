@@ -4,11 +4,18 @@
     data-video-base="<?= $assetBase ?>/videos"
     data-poster-base="<?= $assetBase ?>/images">
     <img class="hero-poster" alt="" loading="eager" fetchpriority="high" />
-    <video class="hero-video hero-video--a" muted playsinline preload="auto"></video>
-    <video class="hero-video hero-video--b" muted playsinline preload="metadata"></video>
-    <div class="hero-overlay" aria-hidden="true"></div>
-    <div class="hero-bottom-fade" aria-hidden="true"></div>
-    <div class="hero-fade" aria-hidden="true"></div>
+    <div class="hero-media" data-force-video="1">
+      <img class="hero-poster" alt="" loading="eager" fetchpriority="high" />
+
+      <video class="hero-video" data-clip="vineyard" muted playsinline preload="auto"></video>
+      <video class="hero-video" data-clip="bottle" muted playsinline preload="metadata"></video>
+      <video class="hero-video" data-clip="cuve" muted playsinline preload="metadata"></video>
+      <video class="hero-video" data-clip="fournisseur" muted playsinline preload="metadata"></video>
+
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-bottom-fade" aria-hidden="true"></div>
+      <div class="hero-fade" aria-hidden="true"></div>
+    </div>
   </div>
 
   <div class="hero-content w-full px-4 pb-14">
