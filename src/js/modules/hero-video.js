@@ -12,14 +12,6 @@ const saveData = () =>
 
 const effectiveType = () => (navigator.connection && navigator.connection.effectiveType) || '';
 
-function pickType(videoEl, types) {
-  for (const t of types) {
-    const r = videoEl.canPlayType(t);
-    if (r === 'probably' || r === 'maybe') return t;
-  }
-  return '';
-}
-
 function buildSources(videoBase, name) {
   return [
     { src: `${videoBase}/${name}.av1.mp4`, type: 'video/mp4; codecs="av01.0.05M.08"' },
