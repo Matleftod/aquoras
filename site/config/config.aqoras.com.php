@@ -1,12 +1,12 @@
 <?php
 return [
-  'debug' => true,
+  'debug' => false,
   'vite' => [
     'dev' => false,
   ],
   'cache' => [
     'pages' => [
-      'active' => true,
+      'active' => false,
     ],
   ],
   'panel' => [
