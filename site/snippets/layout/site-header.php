@@ -1,7 +1,9 @@
-<?php /** @var string $assetBase */ ?>
+<?php
+
+/** @var string $assetBase */ ?>
 <header class="header fixed top-0 inset-x-0 z-50" data-header>
   <div class="container mx-auto px-4 py-3">
-    <div class="navbar bg-base-100/70 backdrop-blur border border-base-200 shadow-sm rounded-2xl px-2">
+    <div class="navbar bg-base-100/70 backdrop-blur shadow-sm rounded-2xl px-2">
       <div class="navbar-start gap-2">
         <a aria-label="Aqoras" class="btn btn-ghost !rounded-xl px-2" href="#accueil">
           <img alt="Aqoras" src="<?= $assetBase ?>/logo.png" class="h-7 w-auto">
