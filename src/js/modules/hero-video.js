@@ -223,9 +223,6 @@ export function setupHeroVideoCarousel() {
     // Après le crossfade, on gèle l’ancienne vidéo (sinon elle continue et peut “attirer l’œil”)
     setTimeout(() => {
       out.pause();
-      try {
-        out.currentTime = 0;
-      } catch {}
     }, XFADE_MS + 40);
 
     idx = (idx + 1) % clips.length;
