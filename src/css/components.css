@@ -506,31 +506,58 @@ body.is-loaded [data-intro] {
 @media (max-width: 940px) {
   .roadmap {
     --rail: 26px;
+    --gutter: 14px;
   }
 
+  /* force pin + card sur la même ligne */
+  .roadmap-row > .row-pin,
+  .roadmap-row > .step--road {
+    grid-row: 1;
+  }
+
+  /* on dégage les éléments fantômes du layout */
+  .roadmap-row > .row-spacer {
+    display: none;
+  }
+
+  /* si jamais un spacer non-ciblé existe encore */
+  .roadmap-row > :is(.row-spacer) {
+    grid-row: 1;
+  }
+
+  /* on décale le contenu (rows) */
+  .roadmap-rows {
+    padding-left: var(--gutter);
+  }
+
+  /* on décale le rail exactement pareil */
   .roadmap-track {
-    left: 14px;
-    margin-left: 0;
+    left: var(--gutter) !important;
+    margin-left: 0 !important;
+    width: var(--rail);
   }
 
   .roadmap-row {
     grid-template-columns: var(--rail) 1fr;
-    column-gap: 18px;
-  }
-
-  .row-spacer {
-    display: none;
+    column-gap: 16px;
+    align-items: center; /* clé: pin au milieu de la card */
   }
 
   .row-pin {
     grid-column: 1;
     justify-self: center;
+    margin-top: 0; /* clé: on vire le hack */
+    align-self: center; /* sécurité */
   }
 
   .step--road {
     grid-column: 2 !important;
     justify-self: stretch !important;
     width: 100%;
+  }
+
+  .row-spacer {
+    display: none;
   }
 
   .roadmap-row.is-left .row-pin::before,
@@ -647,39 +674,52 @@ body.is-loaded [data-intro] {
   z-index: 5;
 }
 
+.product-scene {
+  --s: 1; /* échelle desktop */
+}
+
+/* tailles "base" * échelle */
 .product-item[data-item='bouchon'] .product-icon {
-  width: 155px;
+  width: calc(155px * var(--s));
 }
 .product-item[data-item='bouteille'] .product-icon {
-  width: 110px;
+  width: calc(110px * var(--s));
 }
 .product-item[data-item='etiquette'] .product-icon {
-  width: 109px;
+  width: calc(109px * var(--s));
 }
 .product-item[data-item='carton'] .product-icon {
-  width: 300px;
+  width: calc(300px * var(--s));
 }
 
 .product-shift--bouchon {
-  transform: translate(-85px, 165px);
+  transform: translate(calc(-85px * var(--s)), calc(165px * var(--s)));
 }
 .product-shift--etiquette {
-  transform: translate(0px, 33px);
+  transform: translate(calc(0px * var(--s)), calc(33px * var(--s)));
 }
 .product-shift--carton {
-  transform: translate(170px, 65px);
+  transform: translate(calc(170px * var(--s)), calc(65px * var(--s)));
 }
 
 /* Responsive : offsets plus soft sur mobile */
 @media (max-width: 640px) {
-  .product-shift--bouchon {
-    transform: translate(-60px, 20px);
+  .product-pillbar {
+    gap: 12px;
+    padding: 12px;
+    border: none;
+    background: none;
+    box-shadow: none;
   }
-  .product-shift--etiquette {
-    transform: translate(70px, 10px);
+  .product-scene {
+    --s: 0.62; /* règle le fit, teste 0.58–0.70 */
+    min-height: 260px; /* évite que ça déborde en bas */
   }
-  .product-shift--carton {
-    transform: translate(20px, 58px);
+
+  /* optionnel : hover scale un peu moins agressif sur petit écran */
+  .product-item:hover .product-icon,
+  .product-item.is-active .product-icon {
+    transform: scale(1.1);
   }
 }
 
@@ -1108,12 +1148,26 @@ body.is-loaded [data-intro] {
 }
 
 @media (max-width: 940px) {
+  /* 1) Mobile: empile tout en 1 colonne */
   .tc-row--a,
   .tc-row--b {
     grid-template-columns: 1fr;
   }
-  .tc-contact-grid {
-    grid-template-columns: 1fr;
+
+  /* 2) Mobile: images plus petites */
+  .tc-media {
+    width: 100%;
+    max-width: 220px; /* ajuste: 200–260 selon ton rendu */
+    margin-inline: auto; /* centré */
+    aspect-ratio: 1 / 1; /* tu peux passer à 4/5 si tu veux moins haut */
+  }
+
+  /* 3) Mobile: forcer l'ordre image -> texte sur la ligne B */
+  .tc-row--b .tc-media {
+    order: -1;
+  }
+  .tc-row--b .tc-copy {
+    order: 0;
   }
 }
 

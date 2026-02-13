@@ -1,46 +1,46 @@
 export function setupProductsHover() {
-  const scope = document.querySelector("#produits");
+  const scope = document.querySelector('#produits');
   if (!scope) return;
 
-  const tabs = Array.from(scope.querySelectorAll(".product-tab"));
-  const items = Array.from(scope.querySelectorAll(".product-item"));
+  const tabs = Array.from(scope.querySelectorAll('.product-tab'));
+  const items = Array.from(scope.querySelectorAll('.product-item'));
   if (!tabs.length || !items.length) return;
 
-  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   const setActive = (key) => {
     for (const t of tabs) {
       const active = t.dataset.focus === key;
-      t.classList.toggle("is-active", active);
-      t.classList.toggle("tab-active", active);
-      t.setAttribute("aria-selected", active ? "true" : "false");
+      t.classList.toggle('is-active', active);
+      t.classList.toggle('tab-active', active);
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
     }
     for (const i of items) {
-      i.classList.toggle("is-active", i.dataset.item === key);
+      i.classList.toggle('is-active', i.dataset.item === key);
     }
   };
 
   const clearActive = () => {
     for (const t of tabs) {
-      t.classList.remove("is-active", "tab-active");
-      t.setAttribute("aria-selected", "false");
+      t.classList.remove('is-active', 'tab-active');
+      t.setAttribute('aria-selected', 'false');
     }
-    for (const i of items) i.classList.remove("is-active");
+    for (const i of items) i.classList.remove('is-active');
   };
 
   scope.addEventListener(
-    "mouseenter",
+    'mouseenter',
     (e) => {
-      const tab = e.target.closest?.(".product-tab");
+      const tab = e.target.closest?.('.product-tab');
       if (tab) setActive(tab.dataset.focus);
-      const item = e.target.closest?.(".product-item");
+      const item = e.target.closest?.('.product-item');
       if (item) setActive(item.dataset.item);
     },
-    true
+    true,
   );
 
-  scope.addEventListener("click", (e) => {
-    const tab = e.target.closest?.(".product-tab");
+  scope.addEventListener('click', (e) => {
+    const tab = e.target.closest?.('.product-tab');
     if (tab) setActive(tab.dataset.focus);
   });
 
@@ -53,7 +53,7 @@ export function setupProductsHover() {
   const armClear = () => {
     clearTimeout(timer);
     timer = window.setTimeout(() => {
-      if (!scope.querySelector(".product-tab:hover, .product-item:hover")) {
+      if (!scope.querySelector('.product-tab:hover, .product-item:hover')) {
         clearActive();
       }
     }, 60);
@@ -62,22 +62,22 @@ export function setupProductsHover() {
   const disarmClear = () => clearTimeout(timer);
 
   scope.addEventListener(
-    "pointerover",
+    'pointerover',
     (e) => {
-      if (e.target.closest?.(".product-tab, .product-item")) disarmClear();
+      if (e.target.closest?.('.product-tab, .product-item')) disarmClear();
     },
-    true
+    true,
   );
 
   scope.addEventListener(
-    "pointerout",
+    'pointerout',
     (e) => {
-      if (e.target.closest?.(".product-tab, .product-item")) armClear();
+      if (e.target.closest?.('.product-tab, .product-item')) armClear();
     },
-    true
+    true,
   );
 
-  scope.addEventListener("pointerleave", () => {
+  scope.addEventListener('pointerleave', () => {
     disarmClear();
     clearActive();
   });

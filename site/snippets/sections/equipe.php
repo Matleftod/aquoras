@@ -1,4 +1,6 @@
-<?php /** @var string $assetBase */ ?>
+<?php
+
+/** @var string $assetBase */ ?>
 <section aria-label="Qui sommes-nous et contact" class="team-contact py-16" id="equipe">
   <div class="container px-4">
     <div class="tc-card">
