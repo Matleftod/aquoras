@@ -111,7 +111,7 @@ img {
   margin-inline: auto;
 }
 
-/* Hero media (video carousel) */
+/* Hero media (single MP4 loop) */
 .hero-media {
   position: absolute;
   inset: 0;
@@ -119,8 +119,8 @@ img {
   background: #0b1617; /* jamais de flash clair */
   pointer-events: none;
 
-  /* crossfade duration (transition entre vidéos) */
-  --hero-xfade: 900ms;
+  /* durée du fondu d’apparition de la vidéo (poster -> vidéo) */
+  --hero-xfade: 220ms;
 }
 
 .hero-poster {
@@ -130,14 +130,19 @@ img {
   height: 100%;
   object-fit: cover;
 }
+
+/* Quand la vidéo est OK, on fait disparaître le poster */
 .hero-media.has-video .hero-poster {
   opacity: 0;
   transition: opacity 200ms ease;
 }
+
+/* Si on coupe la vidéo (prefers-reduced-motion / save-data / erreur), on la masque */
 .hero-media.no-video .hero-video {
   display: none;
 }
 
+/* Vidéo unique (loop natif) */
 .hero-video {
   position: absolute;
   inset: 0;
@@ -146,13 +151,14 @@ img {
   object-fit: cover;
   filter: saturate(0.95) contrast(1.05) brightness(0.92);
 
-  opacity: 0;
+  opacity: 0; /* cachée tant qu’on n’a pas "has-video" */
   transition: opacity var(--hero-xfade) ease;
   will-change: opacity;
   z-index: 1;
 }
 
-.hero-video.is-active {
+/* La vidéo devient visible quand on sait qu’elle peut jouer */
+.hero-media.has-video .hero-video {
   opacity: 1;
 }
 
@@ -189,7 +195,7 @@ img {
   );
 }
 
-/* Si tu gardes hero-fade dans le DOM, il ne doit plus intervenir dans la transition */
+/* Si tu gardes hero-fade dans le DOM, il ne doit plus intervenir */
 .hero-fade {
   display: none;
 }
@@ -203,6 +209,7 @@ img {
     transform 1.2s ease;
   will-change: opacity, transform;
 }
+
 body.is-loaded [data-intro] {
   opacity: 1;
   transform: translateY(0);

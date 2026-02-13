@@ -1,21 +1,27 @@
 <section aria-label="Accueil" class="hero min-h-screen relative overflow-hidden" id="accueil">
-  <div class="hero-media"
-    data-force-video="1"
-    data-video-base="<?= $assetBase ?>/videos"
-    data-poster-base="<?= $assetBase ?>/images">
-    <img class="hero-poster" alt="" loading="eager" fetchpriority="high" />
-    <div class="hero-media" data-force-video="1">
-      <img class="hero-poster" alt="" loading="eager" fetchpriority="high" />
+  <div
+    class="hero-media"
+    data-force-video="1">
+    <img
+      class="hero-poster"
+      src="<?= $assetBase ?>/images/hero-video.jpg"
+      alt=""
+      loading="eager"
+      fetchpriority="high" />
 
-      <video class="hero-video" data-clip="vineyard" muted playsinline preload="auto"></video>
-      <video class="hero-video" data-clip="bottle" muted playsinline preload="metadata"></video>
-      <video class="hero-video" data-clip="cuve" muted playsinline preload="metadata"></video>
-      <video class="hero-video" data-clip="fournisseur" muted playsinline preload="metadata"></video>
+    <video
+      class="hero-video"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="auto"
+      poster="<?= $assetBase ?>/images/hero-video.jpg">
+      <source src="<?= $assetBase ?>/videos/hero-video.mp4" type="video/mp4">
+    </video>
 
-      <div class="hero-overlay" aria-hidden="true"></div>
-      <div class="hero-bottom-fade" aria-hidden="true"></div>
-      <div class="hero-fade" aria-hidden="true"></div>
-    </div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-bottom-fade" aria-hidden="true"></div>
   </div>
 
   <div class="hero-content w-full px-4 pb-14">

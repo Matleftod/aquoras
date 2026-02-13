@@ -4,9 +4,7 @@
 <section aria-label="Comment fonctionne la plateforme" class="section process process--video py-16" id="fonctionnement">
   <div aria-hidden="true" class="soft-video">
     <video autoplay class="soft-video-media" loop muted playsinline poster="<?= $assetBase ?>/hero-vineyard.jpg" preload="metadata">
-      <source src="<?= $assetBase ?>/videos/hero-vineyard.av1.mp4" type='video/mp4; codecs="av01.0.05M.08"'>
-      <source src="<?= $assetBase ?>/videos/hero-vineyard.hevc.mp4" type='video/mp4; codecs="hvc1"'>
-      <source src="<?= $assetBase ?>/videos/hero-vineyard.mp4" type='video/mp4; codecs="avc1.42E01E"'>
+      <source src="<?= $assetBase ?>/videos/hero-video.mp4" type='video/mp4; codecs="avc1.42E01E"'>
     </video>
   </div>
 
